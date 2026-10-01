@@ -106,12 +106,17 @@ def index():
 
     q = request.args.get("q", "").strip()
     user_filter = request.args.get("user", "").strip()
+    channel_filter = request.args.get("channel", "").strip()
     date_from = request.args.get("date_from", "").strip()
     date_to = request.args.get("date_to", "").strip()
     page = max(int(request.args.get("page", 1) or 1), 1)
 
     conditions = ["p.delete_at = 0"]
     params: list = []
+
+    if channel_filter:
+        conditions.append("p.channel_id = ?")
+        params.append(channel_filter)
 
     if q:
         if len(q) >= 3:
@@ -157,9 +162,10 @@ def index():
 
     rows = db.execute(
         f"""
-        SELECT p.*, u.username, u.nickname
+        SELECT p.*, u.username, u.nickname, c.display_name AS channel_display_name
         FROM posts p
         LEFT JOIN users u ON u.id = p.user_id
+        LEFT JOIN channels c ON c.id = p.channel_id
         WHERE {where_clause}
         ORDER BY p.create_at DESC
         LIMIT ? OFFSET ?
@@ -180,6 +186,10 @@ def index():
         "SELECT DISTINCT username FROM users WHERE username IS NOT NULL ORDER BY username"
     ).fetchall()
 
+    channels = db.execute(
+        "SELECT id, display_name, name FROM channels ORDER BY display_name"
+    ).fetchall()
+
     total_pages = max((total + PAGE_SIZE - 1) // PAGE_SIZE, 1)
 
     return render_template(
@@ -188,8 +198,11 @@ def index():
         files_by_post=files_by_post,
         display_name=_display_name,
         users=users,
+        channels=channels,
+        multi_channel=len(channels) > 1,
         q=q,
         user_filter=user_filter,
+        channel_filter=channel_filter,
         date_from=date_from,
         date_to=date_to,
         page=page,

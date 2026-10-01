@@ -96,6 +96,14 @@ main {
   font-weight: 600;
 }
 
+.channel-badge {
+  background: #e4e6ea;
+  color: #444;
+  font-size: 0.75rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 10px;
+}
+
 .time {
   color: #888;
   font-size: 0.8rem;
