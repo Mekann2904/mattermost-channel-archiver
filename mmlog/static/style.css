@@ -1,0 +1,159 @@
+* { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
+  background: #f4f5f7;
+  color: #1d1c1d;
+  margin: 0;
+}
+
+header {
+  background: #1e325c;
+  color: white;
+  padding: 0.75rem 1.5rem;
+}
+
+header a {
+  color: white;
+  text-decoration: none;
+}
+
+header h1 {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+main {
+  max-width: 900px;
+  margin: 1.5rem auto;
+  padding: 0 1rem;
+}
+
+.search-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  background: white;
+  padding: 0.75rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+  margin-bottom: 1rem;
+}
+
+.search-form input[type="text"] {
+  flex: 1 1 240px;
+  padding: 0.4rem 0.6rem;
+}
+
+.search-form input, .search-form select, .search-form button {
+  font-size: 0.9rem;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.search-form button {
+  background: #1e325c;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.clear {
+  color: #666;
+  font-size: 0.85rem;
+}
+
+.result-count {
+  color: #555;
+  font-size: 0.85rem;
+  margin: 0.5rem 0;
+}
+
+.posts {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.post {
+  background: white;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+}
+
+.post-meta {
+  display: flex;
+  gap: 0.75rem;
+  align-items: baseline;
+  margin-bottom: 0.25rem;
+}
+
+.author {
+  font-weight: 600;
+}
+
+.time {
+  color: #888;
+  font-size: 0.8rem;
+}
+
+.thread-link {
+  font-size: 0.8rem;
+  color: #1264a3;
+}
+
+.post-message {
+  white-space: pre-wrap;
+  word-break: break-word;
+  line-height: 1.5;
+}
+
+.post-message mark {
+  background: #fff3a3;
+  color: inherit;
+  border-radius: 2px;
+  padding: 0 1px;
+}
+
+.attachments {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.attachments a {
+  color: #1264a3;
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+
+.thumb {
+  max-width: 180px;
+  max-height: 180px;
+  border-radius: 4px;
+  display: block;
+}
+
+.empty {
+  color: #888;
+  text-align: center;
+  padding: 2rem;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0 2rem;
+}
+
+.pagination a {
+  color: #1264a3;
+  text-decoration: none;
+}
