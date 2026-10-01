@@ -7,7 +7,9 @@
 from __future__ import annotations
 
 import argparse
-from pathlib import Path
+import sys
+
+import requests
 
 from .api import MattermostClient
 from .config import ATTACHMENTS_DIR, load_settings
@@ -23,6 +25,11 @@ def export_channel(channel_id: str | None = None) -> None:
     channel_id = channel_id or settings.channel_id
 
     client = MattermostClient(settings)
+
+    # 最初に自分の情報を取得し、無効なトークンなら即失敗させる
+    me = client.get_me()
+    print(f"ユーザー: {me.get('username')}")
+
     conn = connect()
 
     channel = client.get_channel(channel_id)
@@ -125,7 +132,10 @@ def main() -> None:
         help="エクスポート対象のチャンネルID (省略時は .env の CHANNEL_ID を使用)",
     )
     args = parser.parse_args()
-    export_channel(channel_id=args.channel_id)
+    try:
+        export_channel(channel_id=args.channel_id)
+    except requests.HTTPError as exc:
+        sys.exit(f"エラー: {exc}")
 
 
 if __name__ == "__main__":

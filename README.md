@@ -12,6 +12,34 @@ MATTERMOST_TOKEN=xxxxxxxx
 CHANNEL_ID=xxxxxxxx
 ```
 
+### 認証方式の切り替え (`MATTERMOST_AUTH`)
+
+`MATTERMOST_AUTH` で認証方式を明示的に選択します。省略時は `token` です。
+
+| 値 | 認証方式 | 必要な設定 |
+| --- | --- | --- |
+| `token` (デフォルト) | `MATTERMOST_TOKEN` の PAT で認証 | `MATTERMOST_TOKEN` (必須) |
+| `desktop` | macOS デスクトップアプリのログインセッションで認証 | なし (`MATTERMOST_TOKEN` との併記はエラー) |
+
+### PATが作れない場合 (macOS限定)
+
+サーバー設定によってはパーソナルアクセストークン (PAT) を作成できないアカウントがあります
+(Mattermost のデフォルトでは管理者のみ作成可)。その場合は `MATTERMOST_AUTH=desktop` を
+使うと、**Mattermost デスクトップアプリのログインセッション**で認証できます:
+
+```
+MATTERMOST_URL=https://your-mattermost-server
+MATTERMOST_AUTH=desktop
+CHANNEL_ID=xxxxxxxx
+```
+
+- 事前に macOS 用デスクトップアプリで対象サーバーにログインしておいてください
+- 初回のみ macOS の許可ダイアログが出ます (Keychain の「Mattermost Safe Storage」読み取り)。「常に許可」推奨
+- PAT と違いセッションには期限があります(サーバー設定依存)。切れたらデスクトップアプリで再ログインしてください
+- この方式は macOS 専用です (Linux では PAT を使ってください)
+
+仕組みは [mattermost-exporter](https://github.com/Mekann2904/mattermost-exporter) の自動検出を移植したものです。
+
 依存パッケージは `uv sync` で導入されます(既に導入済み)。
 
 ## エクスポート

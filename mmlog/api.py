@@ -22,6 +22,9 @@ class MattermostClient:
         resp.raise_for_status()
         return resp
 
+    def get_me(self) -> dict:
+        return self._get("/users/me").json()
+
     def get_channel(self, channel_id: str) -> dict:
         return self._get(f"/channels/{channel_id}").json()
 
